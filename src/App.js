@@ -5,6 +5,12 @@ import MainContext from './MainContext';
 import BrandsData from "./brands.json"
 import React, { useEffect, useState } from 'react'
 import Copied from './components/Copied';
+import Collections from './components/Collections';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,Link,Routes,useRoutes
+} from "react-router-dom"
 
 
 function App() {
@@ -39,13 +45,32 @@ function App() {
     search,
     setSearch
   }
+
+
+  function AppRoutes() {
+    const routes = useRoutes(
+      [
+        {path:'/',element:<Content/>},
+        {path:'/collection/:slugs',element:<Collections/>}
+      ]
+    )
+    return routes;
+  }
   return (
+
+    
     <>
     <MainContext.Provider value={data}>
     {copied && <Copied color={copied}/>}
 
     <Sidebar />
-      <Content />
+        <Router>
+        
+          <AppRoutes/>
+          
+        
+        </Router>
+    
     </MainContext.Provider>
     
     </>
